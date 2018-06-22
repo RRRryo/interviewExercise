@@ -14,7 +14,7 @@ import java.util.regex.Pattern;
 public class KeyValueParser {
 
     private static final String FILE_NAME = "config.properties";
-    private static final String PATH_PREFIX= "src";
+    private static final String PATH_PREFIX= System.getProperty("user.dir");
     private static final String TEMPLATE_REGEX_PATTERN = "\\$\\{(.*?)}";
 
     private final static Logger logger = Logger.getLogger(KeyValueParser.class);
