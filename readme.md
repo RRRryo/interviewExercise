@@ -5,7 +5,7 @@ Exercise of emergentTech
 ## Prerequisites
 JRE 1.8
 
-## Execute the code
+## Executing the code
 ### by binary
 Move the folder of test "configs" to the same path of propertiesParser.jar
 Execute the following commande line :
