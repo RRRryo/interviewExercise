@@ -71,18 +71,13 @@ public class KeyValueParser {
         return  inputStr;
     }
 
-    /**
-     * properties is in alphabetical order on key-name
-     *
-     * @param inputStr
-     * @return
-     */
+
     private Map<String,String> getPropertiesForPath(String inputStr){
 
         //use treeMap to sort the properties in alphabetical order on key-name
         Map<String,String> properties = new TreeMap<>();
 
-        List<String> pathList = new ArrayList(Arrays.asList(inputStr.split("/")));
+        List<String> pathList = new ArrayList<>(Arrays.asList(inputStr.split("/")));
         Iterator<String> iterator = pathList.iterator();
         StringBuilder subPathSB = new StringBuilder().append(PATH_PREFIX).append("/");
 
