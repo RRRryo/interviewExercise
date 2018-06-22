@@ -25,12 +25,19 @@ public class KeyValueParser {
             logger.fatal("please input a path, for example: /configs/dev/east/node1");
             return;
         }
-        //INPUT
+
         String inputStr = args[0];
 
         KeyValueParser keyValueParser = new KeyValueParser();
-        keyValueParser.process(inputStr);
 
+        Map<String, String> properties = keyValueParser.process(inputStr);
+
+        if (properties != null && logger.isInfoEnabled()){
+            logger.info("\nproperties after replacement of template:===========================================\n");
+            for (Map.Entry<String,String> entry : properties.entrySet()) {
+                logger.info(entry.getKey() + "=" + entry.getValue());
+            }
+        }
     }
 
     public Map<String,String> process(String inputStr) {
@@ -64,27 +71,12 @@ public class KeyValueParser {
         return  inputStr;
     }
 
-    private void processTemplateForProperties(Map<String, String> properties) {
-        Pattern pattern = Pattern.compile(TEMPLATE_REGEX_PATTERN);
-
-        //find and replace all the template key & value
-        StrSubstitutor sub = new StrSubstitutor(properties);
-
-        for (Map.Entry<String, String> entry : properties.entrySet()) {
-            Matcher matcher = pattern.matcher(entry.getValue());
-            if (matcher.find()) {
-                entry.setValue(sub.replace(entry.getValue()));
-            }
-        }
-
-        if (logger.isInfoEnabled()){
-            logger.info("\nproperties after replacement of template:===========================================\n");
-            for (Map.Entry<String,String> entry : properties.entrySet()) {
-                logger.info(entry.getKey() + "=" + entry.getValue());
-            }
-        }
-    }
-
+    /**
+     * properties is in alphabetical order on key-name
+     *
+     * @param inputStr
+     * @return
+     */
     private Map<String,String> getPropertiesForPath(String inputStr){
 
         //use treeMap to sort the properties in alphabetical order on key-name
@@ -128,4 +120,21 @@ public class KeyValueParser {
 
         return properties;
     }
+
+    private void processTemplateForProperties(Map<String, String> properties) {
+        Pattern pattern = Pattern.compile(TEMPLATE_REGEX_PATTERN);
+
+        //find and replace all the template key & value
+        StrSubstitutor sub = new StrSubstitutor(properties);
+
+        for (Map.Entry<String, String> entry : properties.entrySet()) {
+            Matcher matcher = pattern.matcher(entry.getValue());
+            if (matcher.find()) {
+                entry.setValue(sub.replace(entry.getValue()));
+            }
+        }
+
+    }
+
+
 }

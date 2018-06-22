@@ -7,6 +7,7 @@ JDK 1.8
 
 ## Executing the code
 ### by JAR
+rename propertiesParser_jar to propertiesParser.jar
 Move the folder of test "configs" to the same path of propertiesParser.jar
 Execute the following command line :
 
