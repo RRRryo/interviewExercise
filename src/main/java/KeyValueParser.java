@@ -29,14 +29,7 @@ public class KeyValueParser {
         String inputStr = args[0];
 
         KeyValueParser keyValueParser = new KeyValueParser();
-        Map<String, String> properties = keyValueParser.getPathListForAllLevel(inputStr);
-
-        if (logger.isInfoEnabled()){
-            logger.info("the output of properties:");
-            for (Map.Entry<String,String> entry : properties.entrySet()) {
-                logger.info(entry.getKey() + "=" + entry.getValue());
-            }
-        }
+        keyValueParser.getPathListForAllLevel(inputStr);
 
     }
 
@@ -49,7 +42,6 @@ public class KeyValueParser {
             logger.error("this path does not exist!");
             return null;
         }
-
 
 
         List<String> pathList = new ArrayList(Arrays.asList(inputStr.split("/")));
@@ -92,13 +84,20 @@ public class KeyValueParser {
 
         Pattern pattern = Pattern.compile(TEMPLATE_REGEX_PATTERN);
 
-        //find and replace all the template ley & value
+        //find and replace all the template key & value
         StrSubstitutor sub = new StrSubstitutor(properties);
 
         for (Map.Entry<String, String> entry : properties.entrySet()) {
             Matcher matcher = pattern.matcher(entry.getValue());
             while (matcher.find()) {
                 entry.setValue(sub.replace(entry.getValue()));
+            }
+        }
+
+        if (logger.isInfoEnabled()){
+            logger.info("\nproperties after replacement of template:===========================================\n");
+            for (Map.Entry<String,String> entry : properties.entrySet()) {
+                logger.info(entry.getKey() + "=" + entry.getValue());
             }
         }
 
