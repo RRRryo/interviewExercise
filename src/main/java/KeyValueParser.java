@@ -9,7 +9,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * Created by a542901 on 22/06/2018.
+ * Created by Liang on 22/06/2018.
  */
 public class KeyValueParser {
 
@@ -73,9 +73,11 @@ public class KeyValueParser {
     }
 
 
+    /**
+     * store the properties into treeMap order by key-name
+     */
     private Map<String,String> getPropertiesForPath(String inputStr){
 
-        //use treeMap to sort the properties in alphabetical order on key-name
         Map<String,String> properties = new TreeMap<>();
 
         List<String> pathList = new ArrayList<>(Arrays.asList(inputStr.split("/")));
@@ -117,10 +119,12 @@ public class KeyValueParser {
         return properties;
     }
 
+    /**
+     * find and replace templates
+     */
     private void processTemplateForProperties(Map<String, String> properties) {
         Pattern pattern = Pattern.compile(TEMPLATE_REGEX_PATTERN);
 
-        //find and replace all the template key & value
         StrSubstitutor sub = new StrSubstitutor(properties);
 
         for (Map.Entry<String, String> entry : properties.entrySet()) {

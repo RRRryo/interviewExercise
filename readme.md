@@ -3,8 +3,9 @@
 Exercise of emergentTech
 
 ## Prerequisites
-JDK 1.8
+JRE1.8 for executing JAR; JDK 1.8 for source code
 Maven 3
+Using IDE is recommended for executing the source code
 
 ## Executing the code
 ### by JAR
@@ -19,9 +20,8 @@ java -cp propertiesParser.jar KeyValueParser "/configs/dev/east/node1"
 ### by source code
 Open the IDE and import the project
 Import the dependencies by Maven
-Build the project
+Build the project with JDK1.8 and language level >= 8
 Run KeyValueParser.main() with program arguments: ${PATH}
 
-
 ## Running the tests
-Execute all the JUnit tests in KeyValueParserTest.java
+Execute all JUnit tests in KeyValueParserTest.java
