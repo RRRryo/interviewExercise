@@ -38,11 +38,12 @@ public class KeyValueParser {
         if (inputStr == null || inputStr.isEmpty()) {
             logger.error("input path should not be empty");
             return null;
+        } else if (!inputStr.startsWith("/")) {
+            inputStr = "/" + inputStr;
         } else if (!Files.exists(Paths.get(PATH_PREFIX+inputStr))) {
             logger.error("this path does not exist!");
             return null;
         }
-
 
         List<String> pathList = new ArrayList(Arrays.asList(inputStr.split("/")));
         Iterator<String> iterator = pathList.iterator();

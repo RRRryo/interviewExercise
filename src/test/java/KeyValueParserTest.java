@@ -97,6 +97,20 @@ public class KeyValueParserTest extends TestCase {
 
     }
 
+    public void testNormalInputBeginWithoutSlash() throws Exception {
+        String input = "configs/dev/east";
+        Map<String, String> result = keyValueParser.getPathListForAllLevel(input);
+
+        Map<String, String> expectedResult = new TreeMap<>();
+        expectedResult.put("email.host.address","smpt.east.google.com");
+        expectedResult.put("email.host.port","25");
+        expectedResult.put("email.host.protocol","http");
+        expectedResult.put("email.url","http://smpt.east.google.com:25/${host.name}");
+
+        Assert.assertThat(result, Matchers.equalTo(expectedResult));
+
+    }
+
 
     public void testConfigsInput() throws Exception {
         String input = "/configs";
