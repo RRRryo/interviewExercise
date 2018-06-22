@@ -39,7 +39,7 @@ public class KeyValueParserTest extends TestCase {
 
     }
 
-    public void testNormalInputNode1() throws Exception {
+    public void testNormalInputEastNode1() throws Exception {
         String input = "/configs/dev/east/node1";
         Map<String, String> result = keyValueParser.process(input);
 
@@ -54,7 +54,7 @@ public class KeyValueParserTest extends TestCase {
 
     }
 
-    public void testNormalInputNode2() throws Exception {
+    public void testNormalInputEastNode2() throws Exception {
         String input = "/configs/dev/east/node2";
         Map<String, String> result = keyValueParser.process(input);
 
@@ -63,6 +63,21 @@ public class KeyValueParserTest extends TestCase {
         expectedResult.put("email.host.port","25");
         expectedResult.put("email.host.protocol","http");
         expectedResult.put("email.url","http://smpt.east.google.com:25/node2");
+        expectedResult.put("host.name","node2");
+
+        Assert.assertThat(result, Matchers.equalTo(expectedResult));
+
+    }
+
+    public void testNormalInputWestNode2() throws Exception {
+        String input = "/configs/dev/west/node2";
+        Map<String, String> result = keyValueParser.process(input);
+
+        Map<String, String> expectedResult = new TreeMap<>();
+        expectedResult.put("email.host.address","smpt.west.google.com");
+        expectedResult.put("email.host.port","25");
+        expectedResult.put("email.host.protocol","http");
+        expectedResult.put("email.url","http://smpt.west.google.com:25/node2");
         expectedResult.put("host.name","node2");
 
         Assert.assertThat(result, Matchers.equalTo(expectedResult));
