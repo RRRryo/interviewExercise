@@ -9,7 +9,7 @@ Using IDE is recommended for executing the source code
 
 ## Executing the code
 ### by JAR
-Rename propertiesParser_jar to propertiesParser.jar
+Rename propertiesParser_jar to propertiesParser.jar (the extension .jar was renamed as _jar for attachment transfer)
 Move the folder of test "configs" to the same path of propertiesParser.jar
 Execute the following command line :
 java -cp propertiesParser.jar PropertiesParser ${PATH}
