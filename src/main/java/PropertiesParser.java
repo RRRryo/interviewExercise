@@ -45,10 +45,14 @@ public class PropertiesParser {
         processTemplateForProperties(properties);
 
         if (properties != null && logger.isInfoEnabled()){
-            logger.info("\nproperties after replacement of template:===========================================\n");
-            for (Map.Entry<String,String> entry : properties.entrySet()) {
-                logger.info(entry.getKey() + "=" + entry.getValue());
-            }
+            if (properties.size() > 0 ) {
+                logger.info("\n=================properties==========================\n");
+                for (Map.Entry<String,String> entry : properties.entrySet()) {
+                    logger.info(entry.getKey() + "=" + entry.getValue());
+                }
+            } else
+                logger.info("no properties is found.");
+
         }
 
         return properties;
@@ -75,6 +79,7 @@ public class PropertiesParser {
 
     /**
      * store the properties into treeMap order by key-name
+     * pass the key as low case
      */
     private Map<String,String> getPropertiesForPath(String inputStr){
 
@@ -96,7 +101,7 @@ public class PropertiesParser {
                         for (String string : strList) {
                             String[] keyValueArray = string.split("=");
                             if (keyValueArray.length > 1) {
-                                //store the key as low case
+                                //pass the key as low case
                                 properties.put(keyValueArray[0].toLowerCase(), keyValueArray[1]);
                             }
                         }
@@ -120,7 +125,7 @@ public class PropertiesParser {
     }
 
     /**
-     * find and replace templates
+     * find and replace templates if possible
      */
     private void processTemplateForProperties(Map<String, String> properties) {
         Pattern pattern = Pattern.compile(TEMPLATE_REGEX_PATTERN);
