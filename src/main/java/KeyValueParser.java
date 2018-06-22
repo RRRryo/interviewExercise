@@ -1,6 +1,5 @@
-package main.java;
-
 import org.apache.commons.lang.text.StrSubstitutor;
+import org.apache.log4j.Logger;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -18,6 +17,28 @@ public class KeyValueParser {
     private static final String PATH_PREFIX= "src/";
     private static final String TEMPLATE_REGEX_PATTERN = "\\$\\{(.*?)}";
 
+    private final static Logger logger = Logger.getLogger(KeyValueParser.class);
+
+
+    public static void main(String[] args) {
+        if (args.length == 0) {
+            logger.fatal("please input a path, for example: /configs/dev/east/node1");
+            return;
+        }
+        //INPUT
+        String inputStr = args[0];
+
+        KeyValueParser keyValueParser = new KeyValueParser();
+        Map<String, String> properties = keyValueParser.getPathListForAllLevel(inputStr);
+
+        if (logger.isInfoEnabled()){
+            logger.info("the output of properties:");
+            for (Map.Entry<String,String> entry : properties.entrySet()) {
+                logger.info(entry.getKey() + "=" + entry.getValue());
+            }
+        }
+
+    }
 
     public Map<String,String> getPathListForAllLevel(String inputStr) {
 
@@ -25,17 +46,17 @@ public class KeyValueParser {
         Iterator<String> iterator = pathList.iterator();
         StringBuilder subPathSB = new StringBuilder().append(PATH_PREFIX);
         //use treeMap to sort the properties in alphabetical order on key-name
-        Map<String,String> properties = new TreeMap<>();
+        Map<String, String> properties = new TreeMap<>();
 
-        while (iterator.hasNext()){
+        while (iterator.hasNext()) {
             String str = iterator.next();
-            if ("".equals(str)){
+            if ("".equals(str)) {
                 iterator.remove();
             } else {
                 subPathSB.append(str).append("/");
-                if (Files.isReadable(Paths.get(subPathSB+FILE_NAME))) {
+                if (Files.isReadable(Paths.get(subPathSB + FILE_NAME))) {
                     try {
-                        List<String> strlist = Files.readAllLines(Paths.get(subPathSB+FILE_NAME));
+                        List<String> strlist = Files.readAllLines(Paths.get(subPathSB + FILE_NAME));
                         for (String string : strlist) {
                             String[] keyValueArray = string.split("=");
                             if (keyValueArray.length > 1) {
@@ -44,17 +65,19 @@ public class KeyValueParser {
                             }
                         }
                     } catch (IOException e) {
-                        e.printStackTrace();
+                        logger.error(e);
                     }
                 }
 
             }
         }
 
-        System.out.println("properties before replacement of template:\n");
-        for (Map.Entry<String,String> entry: properties.entrySet()) {
-            System.out.println(entry.getKey() + "="+entry.getValue());
+        if (logger.isDebugEnabled()) {
+            logger.debug("properties before replacement of template:===========================================\n");
+            for (Map.Entry<String, String> entry : properties.entrySet()) {
+                logger.debug(entry.getKey() + "=" + entry.getValue());
 
+            }
         }
 
         Pattern pattern = Pattern.compile(TEMPLATE_REGEX_PATTERN);
@@ -62,29 +85,13 @@ public class KeyValueParser {
         //find and replace all the template ley & value
         StrSubstitutor sub = new StrSubstitutor(properties);
 
-        for (Map.Entry<String,String> entry: properties.entrySet()) {
-            Matcher matcher =  pattern.matcher(entry.getValue());
-            while(matcher.find()) {
+        for (Map.Entry<String, String> entry : properties.entrySet()) {
+            Matcher matcher = pattern.matcher(entry.getValue());
+            while (matcher.find()) {
                 entry.setValue(sub.replace(entry.getValue()));
             }
-
-        }
-
-        System.out.println("===========================================");
-        System.out.println("properties after replacement of template:\n");
-        for (Map.Entry<String,String> entry : properties.entrySet()) {
-            System.out.println(entry.getKey() + "="+entry.getValue());
         }
 
         return properties;
-    }
-
-
-    public static void main(String[] args) {
-        //INPUT
-        String inputStr = "/configs/dev/east/node1";
-        KeyValueParser keyValueParser = new KeyValueParser();
-        Map<String, String> properties = keyValueParser.getPathListForAllLevel(inputStr);
-
     }
 }
