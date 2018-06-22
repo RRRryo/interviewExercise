@@ -29,21 +29,33 @@ public class KeyValueParser {
         String inputStr = args[0];
 
         KeyValueParser keyValueParser = new KeyValueParser();
-        keyValueParser.getPathListForAllLevel(inputStr);
+        keyValueParser.process(inputStr);
 
     }
 
-    public Map<String,String> getPathListForAllLevel(String inputStr) {
+
+    private String checkInputString(String inputStr) {
 
         if (inputStr == null || inputStr.isEmpty()) {
             logger.error("input path should not be empty");
             return null;
         } else if (!inputStr.startsWith("/")) {
             inputStr = "/" + inputStr;
-        } else if (!Files.exists(Paths.get(PATH_PREFIX+inputStr))) {
+        }
+
+        if (!Files.exists(Paths.get(PATH_PREFIX+inputStr))) {
             logger.error("this path does not exist!");
             return null;
         }
+
+        return  inputStr;
+    }
+
+    public Map<String,String> process(String inputStr) {
+
+        inputStr = checkInputString(inputStr);
+        if (inputStr == null)
+            return null;
 
         List<String> pathList = new ArrayList(Arrays.asList(inputStr.split("/")));
         Iterator<String> iterator = pathList.iterator();

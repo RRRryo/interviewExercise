@@ -6,7 +6,7 @@ Exercise of emergentTech
 JRE 1.8
 
 ## Executing the code
-### by binary
+### by JAR
 Move the folder of test "configs" to the same path of propertiesParser.jar
 Execute the following commande line :
 java -cp propertiesParser.jar KeyValueParser "/configs/dev/east/node1"
