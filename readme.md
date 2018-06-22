@@ -12,6 +12,8 @@ execute the following commande line :
 java -cp propertiesParser.jar KeyValueParser "/configs/dev/east/node1"
 
 ### by source code
+open your IDE and run the KeyValueParser.main with program arguments: "/configs/dev/east/node1"
+
 
 ## Running the tests
 
