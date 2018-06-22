@@ -14,7 +14,7 @@ import java.util.regex.Pattern;
 public class KeyValueParser {
 
     private static final String FILE_NAME = "config.properties";
-    private static final String PATH_PREFIX= "src/";
+    private static final String PATH_PREFIX= "src";
     private static final String TEMPLATE_REGEX_PATTERN = "\\$\\{(.*?)}";
 
     private final static Logger logger = Logger.getLogger(KeyValueParser.class);
@@ -42,9 +42,19 @@ public class KeyValueParser {
 
     public Map<String,String> getPathListForAllLevel(String inputStr) {
 
+        if (inputStr == null || inputStr.isEmpty()) {
+            logger.error("input path should not be empty");
+            return null;
+        } else if (!Files.exists(Paths.get(PATH_PREFIX+inputStr))) {
+            logger.error("this path does not exist!");
+            return null;
+        }
+
+
+
         List<String> pathList = new ArrayList(Arrays.asList(inputStr.split("/")));
         Iterator<String> iterator = pathList.iterator();
-        StringBuilder subPathSB = new StringBuilder().append(PATH_PREFIX);
+        StringBuilder subPathSB = new StringBuilder().append(PATH_PREFIX).append("/");
         //use treeMap to sort the properties in alphabetical order on key-name
         Map<String, String> properties = new TreeMap<>();
 
@@ -56,8 +66,8 @@ public class KeyValueParser {
                 subPathSB.append(str).append("/");
                 if (Files.isReadable(Paths.get(subPathSB + FILE_NAME))) {
                     try {
-                        List<String> strlist = Files.readAllLines(Paths.get(subPathSB + FILE_NAME));
-                        for (String string : strlist) {
+                        List<String> strList = Files.readAllLines(Paths.get(subPathSB + FILE_NAME));
+                        for (String string : strList) {
                             String[] keyValueArray = string.split("=");
                             if (keyValueArray.length > 1) {
                                 //store the key as low case
