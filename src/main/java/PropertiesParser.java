@@ -79,7 +79,8 @@ public class PropertiesParser {
 
     /**
      * store the properties into treeMap order by key-name
-     * pass the key as low case
+     * pass the key to low case
+     * leaf values override values in files closer to the trunk of the folder structure
      */
     private Map<String,String> getPropertiesForPath(String inputStr){
 
