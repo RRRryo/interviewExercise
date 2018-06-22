@@ -3,16 +3,21 @@
 Exercise of emergentTech
 
 ## Prerequisites
-JRE 1.8
+JDK 1.8
 
 ## Executing the code
 ### by JAR
 Move the folder of test "configs" to the same path of propertiesParser.jar
-Execute the following commande line :
+Execute the following command line :
+
+java -cp propertiesParser.jar KeyValueParser "${PATH}"
+
+for example:
 java -cp propertiesParser.jar KeyValueParser "/configs/dev/east/node1"
 
 ### by source code
-Open the IDE and, open the project then run the KeyValueParser.main with program arguments: "/configs/dev/east/node1"
+Open the IDE and import the project
+run the KeyValueParser.main with program arguments: "/configs/dev/east/node1"
 
 
 ## Running the tests
