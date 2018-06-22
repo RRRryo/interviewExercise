@@ -19,6 +19,7 @@ java -cp propertiesParser.jar KeyValueParser "/configs/dev/east/node1"
 ### by source code
 Open the IDE and import the project
 Import the dependencies by Maven
+Build the project
 Run KeyValueParser.main() with program arguments: ${PATH}
 
 
