@@ -11,13 +11,13 @@ import java.util.regex.Pattern;
 /**
  * Created by Liang on 22/06/2018.
  */
-public class KeyValueParser {
+public class PropertiesParser {
 
     private static final String FILE_NAME = "config.properties";
     private static final String PATH_PREFIX= System.getProperty("user.dir");
     private static final String TEMPLATE_REGEX_PATTERN = "\\$\\{(.*?)}";
 
-    private final static Logger logger = Logger.getLogger(KeyValueParser.class);
+    private final static Logger logger = Logger.getLogger(PropertiesParser.class);
 
 
     public static void main(String[] args) {
@@ -28,9 +28,9 @@ public class KeyValueParser {
 
         String inputStr = args[0];
 
-        KeyValueParser keyValueParser = new KeyValueParser();
+        PropertiesParser propertiesParser = new PropertiesParser();
 
-        keyValueParser.process(inputStr);
+        propertiesParser.process(inputStr);
 
     }
 

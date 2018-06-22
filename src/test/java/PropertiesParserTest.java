@@ -8,30 +8,30 @@ import java.util.TreeMap;
 /**
  * Created by Liang on 22/06/2018.
  */
-public class KeyValueParserTest extends TestCase {
+public class PropertiesParserTest extends TestCase {
 
-    private KeyValueParser keyValueParser = new KeyValueParser();
+    private PropertiesParser propertiesParser = new PropertiesParser();
 
 
     public void testNullInput() throws Exception {
-        Map<String, String> result = keyValueParser.process(null);
+        Map<String, String> result = propertiesParser.process(null);
         assert result == null;
     }
 
     public void testEmptyInput() throws Exception {
-        Map<String, String> result = keyValueParser.process("");
+        Map<String, String> result = propertiesParser.process("");
         assert result == null;
     }
 
     public void testNoExistPathInput() throws Exception {
         String input = "/configs/dev/south/node1";
-        Map<String, String> result = keyValueParser.process(input);
+        Map<String, String> result = propertiesParser.process(input);
         assert result == null;
     }
 
     public void testRootInput() throws Exception {
         String input = "/";
-        Map<String, String> result = keyValueParser.process(input);
+        Map<String, String> result = propertiesParser.process(input);
 
         Map<String, String> expectedResult = new TreeMap<>();
 
@@ -41,7 +41,7 @@ public class KeyValueParserTest extends TestCase {
 
     public void testNormalInputEastNode1() throws Exception {
         String input = "/configs/dev/east/node1";
-        Map<String, String> result = keyValueParser.process(input);
+        Map<String, String> result = propertiesParser.process(input);
 
         Map<String, String> expectedResult = new TreeMap<>();
         expectedResult.put("email.host.address","smpt.east.google.com");
@@ -56,7 +56,7 @@ public class KeyValueParserTest extends TestCase {
 
     public void testNormalInputEastNode2() throws Exception {
         String input = "/configs/dev/east/node2";
-        Map<String, String> result = keyValueParser.process(input);
+        Map<String, String> result = propertiesParser.process(input);
 
         Map<String, String> expectedResult = new TreeMap<>();
         expectedResult.put("email.host.address","smpt.east.google.com");
@@ -71,7 +71,7 @@ public class KeyValueParserTest extends TestCase {
 
     public void testNormalInputWestNode2() throws Exception {
         String input = "/configs/dev/west/node2";
-        Map<String, String> result = keyValueParser.process(input);
+        Map<String, String> result = propertiesParser.process(input);
 
         Map<String, String> expectedResult = new TreeMap<>();
         expectedResult.put("email.host.address","smpt.west.google.com");
@@ -86,7 +86,7 @@ public class KeyValueParserTest extends TestCase {
 
     public void testNormalInputEndwithSlash() throws Exception {
         String input = "/configs/dev/east/";
-        Map<String, String> result = keyValueParser.process(input);
+        Map<String, String> result = propertiesParser.process(input);
 
         Map<String, String> expectedResult = new TreeMap<>();
         expectedResult.put("email.host.address","smpt.east.google.com");
@@ -100,7 +100,7 @@ public class KeyValueParserTest extends TestCase {
 
     public void testNormalInputEndWithoutSlash() throws Exception {
         String input = "/configs/dev/east";
-        Map<String, String> result = keyValueParser.process(input);
+        Map<String, String> result = propertiesParser.process(input);
 
         Map<String, String> expectedResult = new TreeMap<>();
         expectedResult.put("email.host.address","smpt.east.google.com");
@@ -114,7 +114,7 @@ public class KeyValueParserTest extends TestCase {
 
     public void testNormalInputBeginWithoutSlash() throws Exception {
         String input = "configs/dev/east";
-        Map<String, String> result = keyValueParser.process(input);
+        Map<String, String> result = propertiesParser.process(input);
 
         Map<String, String> expectedResult = new TreeMap<>();
         expectedResult.put("email.host.address","smpt.east.google.com");
@@ -129,7 +129,7 @@ public class KeyValueParserTest extends TestCase {
 
     public void testConfigsInput() throws Exception {
         String input = "/configs";
-        Map<String, String> result = keyValueParser.process(input);
+        Map<String, String> result = propertiesParser.process(input);
 
         Map<String, String> expectedResult = new TreeMap<>();
         expectedResult.put("email.host.port","25");

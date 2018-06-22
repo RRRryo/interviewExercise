@@ -12,16 +12,15 @@ Using IDE is recommended for executing the source code
 Rename propertiesParser_jar to propertiesParser.jar
 Move the folder of test "configs" to the same path of propertiesParser.jar
 Execute the following command line :
-java -cp propertiesParser.jar KeyValueParser ${PATH}
-
+java -cp propertiesParser.jar PropertiesParser ${PATH}
 For example:
-java -cp propertiesParser.jar KeyValueParser "/configs/dev/east/node1"
+java -cp propertiesParser.jar PropertiesParser "/configs/dev/east/node1"
 
 ### by source code
 Open the IDE and import the project
 Import the dependencies by Maven
 Build the project with JDK1.8 and language level >= 8
-Run KeyValueParser.main() with program arguments: ${PATH}
+Run PropertiesParser.main() with program arguments: ${PATH}
 
 ## Running the tests
-Execute all JUnit tests in KeyValueParserTest.java
+Execute all JUnit tests in PropertiesParserTest.java
