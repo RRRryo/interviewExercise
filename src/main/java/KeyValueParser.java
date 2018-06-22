@@ -30,14 +30,8 @@ public class KeyValueParser {
 
         KeyValueParser keyValueParser = new KeyValueParser();
 
-        Map<String, String> properties = keyValueParser.process(inputStr);
+        keyValueParser.process(inputStr);
 
-        if (properties != null && logger.isInfoEnabled()){
-            logger.info("\nproperties after replacement of template:===========================================\n");
-            for (Map.Entry<String,String> entry : properties.entrySet()) {
-                logger.info(entry.getKey() + "=" + entry.getValue());
-            }
-        }
     }
 
     public Map<String,String> process(String inputStr) {
@@ -49,6 +43,13 @@ public class KeyValueParser {
         Map<String, String> properties =  getPropertiesForPath(inputStr);
 
         processTemplateForProperties(properties);
+
+        if (properties != null && logger.isInfoEnabled()){
+            logger.info("\nproperties after replacement of template:===========================================\n");
+            for (Map.Entry<String,String> entry : properties.entrySet()) {
+                logger.info(entry.getKey() + "=" + entry.getValue());
+            }
+        }
 
         return properties;
     }
