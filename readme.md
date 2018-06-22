@@ -4,6 +4,7 @@ Exercise of emergentTech
 
 ## Prerequisites
 JDK 1.8
+maven 3
 
 ## Executing the code
 ### by JAR
