@@ -33,8 +33,21 @@ public class KeyValueParser {
 
     }
 
+    public Map<String,String> process(String inputStr) {
 
-    private String checkInputString(String inputStr) {
+        inputStr = processInputString(inputStr);
+        if (inputStr == null)
+            return null;
+
+        Map<String, String> properties =  getPropertiesForPath(inputStr);
+
+        processTemplateForProperties(properties);
+
+        return properties;
+    }
+
+
+    private String processInputString(String inputStr) {
 
         if (inputStr == null || inputStr.isEmpty()) {
             logger.error("input path should not be empty");
@@ -51,17 +64,35 @@ public class KeyValueParser {
         return  inputStr;
     }
 
-    public Map<String,String> process(String inputStr) {
+    private void processTemplateForProperties(Map<String, String> properties) {
+        Pattern pattern = Pattern.compile(TEMPLATE_REGEX_PATTERN);
 
-        inputStr = checkInputString(inputStr);
-        if (inputStr == null)
-            return null;
+        //find and replace all the template key & value
+        StrSubstitutor sub = new StrSubstitutor(properties);
+
+        for (Map.Entry<String, String> entry : properties.entrySet()) {
+            Matcher matcher = pattern.matcher(entry.getValue());
+            if (matcher.find()) {
+                entry.setValue(sub.replace(entry.getValue()));
+            }
+        }
+
+        if (logger.isInfoEnabled()){
+            logger.info("\nproperties after replacement of template:===========================================\n");
+            for (Map.Entry<String,String> entry : properties.entrySet()) {
+                logger.info(entry.getKey() + "=" + entry.getValue());
+            }
+        }
+    }
+
+    private Map<String,String> getPropertiesForPath(String inputStr){
+
+        //use treeMap to sort the properties in alphabetical order on key-name
+        Map<String,String> properties = new TreeMap<>();
 
         List<String> pathList = new ArrayList(Arrays.asList(inputStr.split("/")));
         Iterator<String> iterator = pathList.iterator();
         StringBuilder subPathSB = new StringBuilder().append(PATH_PREFIX).append("/");
-        //use treeMap to sort the properties in alphabetical order on key-name
-        Map<String, String> properties = new TreeMap<>();
 
         while (iterator.hasNext()) {
             String str = iterator.next();
@@ -92,25 +123,6 @@ public class KeyValueParser {
             for (Map.Entry<String, String> entry : properties.entrySet()) {
                 logger.debug(entry.getKey() + "=" + entry.getValue());
 
-            }
-        }
-
-        Pattern pattern = Pattern.compile(TEMPLATE_REGEX_PATTERN);
-
-        //find and replace all the template key & value
-        StrSubstitutor sub = new StrSubstitutor(properties);
-
-        for (Map.Entry<String, String> entry : properties.entrySet()) {
-            Matcher matcher = pattern.matcher(entry.getValue());
-            while (matcher.find()) {
-                entry.setValue(sub.replace(entry.getValue()));
-            }
-        }
-
-        if (logger.isInfoEnabled()){
-            logger.info("\nproperties after replacement of template:===========================================\n");
-            for (Map.Entry<String,String> entry : properties.entrySet()) {
-                logger.info(entry.getKey() + "=" + entry.getValue());
             }
         }
 
