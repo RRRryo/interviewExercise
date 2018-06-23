@@ -27,7 +27,7 @@ public class PropertiesParser {
             logger.fatal("please input a path, for example: /configs/dev/east/node1");
             return;
         }
-        
+
         PropertiesParser propertiesParser = new PropertiesParser();
 
         propertiesParser.process(args[0]);
