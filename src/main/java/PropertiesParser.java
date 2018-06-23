@@ -51,7 +51,7 @@ public class PropertiesParser {
                     logger.info(entry.getKey() + "=" + entry.getValue());
                 }
             } else
-                logger.info("no properties is found.");
+                logger.info("no property is found.");
 
         }
 
