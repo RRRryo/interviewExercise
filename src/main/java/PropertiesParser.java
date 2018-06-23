@@ -14,7 +14,9 @@ import java.util.regex.Pattern;
 public class PropertiesParser {
 
     private static final String FILE_NAME = "config.properties";
+
     private static final String PATH_PREFIX= System.getProperty("user.dir");
+
     private static final String TEMPLATE_REGEX_PATTERN = "\\$\\{(.*?)}";
 
     private static final Logger logger = Logger.getLogger(PropertiesParser.class);
