@@ -79,7 +79,7 @@ public class PropertiesParser {
 
     /**
      * store the properties into treeMap order by key-name
-     * pass the key to low case
+     * pass the properties keys to low case
      * leaf values override values in files closer to the trunk of the folder structure
      */
     private Map<String,String> getPropertiesForPath(String inputStr){
@@ -126,7 +126,7 @@ public class PropertiesParser {
     }
 
     /**
-     * find and replace templates if possible
+     * find and try to replace templates
      */
     private void processTemplateForProperties(Map<String, String> properties) {
         Pattern pattern = Pattern.compile(TEMPLATE_REGEX_PATTERN);
