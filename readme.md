@@ -34,4 +34,25 @@ Run PropertiesParser.main() with program arguments: ${PATH}
 
 
 ## Running the tests
+### by JUnit
 Execute all JUnit tests in PropertiesParserTest.java
+### by command line
+case 1: null input
+
+java -cp propertiesParser.jar PropertiesParser
+
+case 2: empty input
+
+java -cp propertiesParser.jar PropertiesParser ""
+
+case 3: no exist path
+
+java -cp propertiesParser.jar PropertiesParser "/configs/dev/south/node1"
+
+case 4: correct path /configs/dev/east/node1
+
+java -cp propertiesParser.jar PropertiesParser "/configs/dev/east/node1"
+
+case 5: correct path /configs/dev/west
+
+java -cp propertiesParser.jar PropertiesParser "/configs/dev/west"
