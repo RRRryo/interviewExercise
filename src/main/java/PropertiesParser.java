@@ -43,7 +43,7 @@ public class PropertiesParser {
         //store the properties into treeMap, order by key-name
         Map<String,String> properties = new TreeMap<>();
 
-        completePropertiesForPath(inputStr, properties);
+        completeProperties(inputStr, properties);
 
         treatTemplate(properties);
 
@@ -75,23 +75,23 @@ public class PropertiesParser {
      * pass the properties keys to low case
      * leaf values override values in files closer to the trunk of the folder structure
      */
-    private Map<String,String> completePropertiesForPath(String inputStr, Map<String, String> properties){
+    private Map<String,String> completeProperties(String inputStr, Map<String, String> properties){
 
-        List<String> pathList = new ArrayList<>(Arrays.asList(inputStr.split("/")));
-        Iterator<String> iterator = pathList.iterator();
-        StringBuilder subPathSB = new StringBuilder().append(PATH_PREFIX).append("/");
+        List<String> folders = new ArrayList<>(Arrays.asList(inputStr.split("/")));
+        Iterator<String> foldersIterator = folders.iterator();
+        StringBuilder pathStrBuilder = new StringBuilder().append(PATH_PREFIX).append("/");
 
-        while (iterator.hasNext()) {
-            String str = iterator.next();
-            if (str.isEmpty()) {
-                iterator.remove();
+        while (foldersIterator.hasNext()) {
+            String folderStr = foldersIterator.next();
+            if (folderStr.isEmpty()) {
+                foldersIterator.remove();
             } else {
-                subPathSB.append(str).append("/");
-                if (Files.isReadable(Paths.get(subPathSB + FILE_NAME))) {
+                pathStrBuilder.append(folderStr).append("/");
+                if (Files.isReadable(Paths.get(pathStrBuilder + FILE_NAME))) {
                     try {
-                        List<String> strList = Files.readAllLines(Paths.get(subPathSB + FILE_NAME));
-                        for (String string : strList) {
-                            String[] keyValueArray = string.split("=");
+                        List<String> keyValueStrList = Files.readAllLines(Paths.get(pathStrBuilder + FILE_NAME));
+                        for (String keyValueStr : keyValueStrList) {
+                            String[] keyValueArray = keyValueStr.split("=");
                             if (keyValueArray.length > 1) {
                                 //pass the key as low case
                                 properties.put(keyValueArray[0].toLowerCase(), keyValueArray[1]);
