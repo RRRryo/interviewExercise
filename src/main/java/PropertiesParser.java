@@ -40,7 +40,10 @@ public class PropertiesParser {
         if (inputStr == null)
             return null;
 
-        Map<String, String> properties =  getPropertiesForPath(inputStr);
+        //store the properties into treeMap, order by key-name
+        Map<String,String> properties = new TreeMap<>();
+
+        completePropertiesForPath(inputStr, properties);
 
         treatTemplate(properties);
 
@@ -69,13 +72,10 @@ public class PropertiesParser {
 
 
     /**
-     * store the properties into treeMap order by key-name
      * pass the properties keys to low case
      * leaf values override values in files closer to the trunk of the folder structure
      */
-    private Map<String,String> getPropertiesForPath(String inputStr){
-
-        Map<String,String> properties = new TreeMap<>();
+    private Map<String,String> completePropertiesForPath(String inputStr, Map<String, String> properties){
 
         List<String> pathList = new ArrayList<>(Arrays.asList(inputStr.split("/")));
         Iterator<String> iterator = pathList.iterator();
@@ -134,16 +134,13 @@ public class PropertiesParser {
     }
 
     private void display(Map<String, String> properties) {
-        if (properties != null){
-            logger.fatal("\n=================properties==========================");
-            if (properties.size() > 0 ) {
-                for (Map.Entry<String,String> entry : properties.entrySet()) {
-                    logger.fatal(entry.getKey() + "=" + entry.getValue());
-                }
-            } else
-                logger.fatal("no property is found for this path.");
-
-        }
+        logger.fatal("\n=================properties==========================");
+        if (properties.size() > 0 ) {
+            for (Map.Entry<String,String> entry : properties.entrySet()) {
+                logger.fatal(entry.getKey() + "=" + entry.getValue());
+            }
+        } else
+            logger.fatal("no property is found for this path.");
     }
 
 
