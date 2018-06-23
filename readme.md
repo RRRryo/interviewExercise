@@ -3,9 +3,9 @@
 Exercise of emergentTech
 
 ## Prerequisites
-JRE1.8 for executing JAR; JDK 1.8 for source code
+JRE 1.8 is required for executing JAR
 
-Maven 3
+JDK 1.8 and Maven 3 is required for source code
 
 Using IDE is recommended for executing the source code
 
