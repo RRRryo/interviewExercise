@@ -5,7 +5,7 @@ Exercise of emergentTech
 ## Prerequisites
 JRE 1.8 is required for executing JAR
 
-JDK 1.8 and Maven 3 is required for source code
+JDK 1.8 and Maven 3 are required for the source code
 
 Using IDE is recommended for executing the source code
 
@@ -15,7 +15,7 @@ Rename propertiesParser_jar to propertiesParser.jar (the extension .jar was rena
 
 Move the folder of test "configs" to the same path of propertiesParser.jar
 
-Execute the following command line :
+Execute the following command in the command line (replace ${PATH} by the path you want to input):
 
 java -cp propertiesParser.jar PropertiesParser ${PATH}
 
