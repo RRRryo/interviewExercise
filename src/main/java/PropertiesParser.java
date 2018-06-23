@@ -17,7 +17,7 @@ public class PropertiesParser {
     private static final String PATH_PREFIX= System.getProperty("user.dir");
     private static final String TEMPLATE_REGEX_PATTERN = "\\$\\{(.*?)}";
 
-    private final static Logger logger = Logger.getLogger(PropertiesParser.class);
+    private static final Logger logger = Logger.getLogger(PropertiesParser.class);
 
 
     public static void main(String[] args) {
