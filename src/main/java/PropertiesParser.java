@@ -92,7 +92,7 @@ public class PropertiesParser {
 
         while (iterator.hasNext()) {
             String str = iterator.next();
-            if ("".equals(str)) {
+            if (str.isEmpty()) {
                 iterator.remove();
             } else {
                 subPathSB.append(str).append("/");
