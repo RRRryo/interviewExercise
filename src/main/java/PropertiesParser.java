@@ -42,18 +42,9 @@ public class PropertiesParser {
 
         Map<String, String> properties =  getPropertiesForPath(inputStr);
 
-        processTemplateForProperties(properties);
+        treatTemplate(properties);
 
-        if (properties != null && logger.isInfoEnabled()){
-            if (properties.size() > 0 ) {
-                logger.info("\n=================properties==========================\n");
-                for (Map.Entry<String,String> entry : properties.entrySet()) {
-                    logger.info(entry.getKey() + "=" + entry.getValue());
-                }
-            } else
-                logger.info("no property is found.");
-
-        }
+        display(properties);
 
         return properties;
     }
@@ -115,7 +106,7 @@ public class PropertiesParser {
         }
 
         if (logger.isDebugEnabled()) {
-            logger.debug("properties before replacement of template:===========================================\n");
+            logger.debug("============properties before replacement of template:==============\n");
             for (Map.Entry<String, String> entry : properties.entrySet()) {
                 logger.debug(entry.getKey() + "=" + entry.getValue());
 
@@ -128,7 +119,7 @@ public class PropertiesParser {
     /**
      * find and try to replace templates
      */
-    private void processTemplateForProperties(Map<String, String> properties) {
+    private void treatTemplate(Map<String, String> properties) {
         Pattern pattern = Pattern.compile(TEMPLATE_REGEX_PATTERN);
 
         StrSubstitutor sub = new StrSubstitutor(properties);
@@ -140,6 +131,19 @@ public class PropertiesParser {
             }
         }
 
+    }
+
+    private void display(Map<String, String> properties) {
+        if (properties != null){
+            logger.fatal("\n=================properties==========================");
+            if (properties.size() > 0 ) {
+                for (Map.Entry<String,String> entry : properties.entrySet()) {
+                    logger.fatal(entry.getKey() + "=" + entry.getValue());
+                }
+            } else
+                logger.fatal("no property is found for this path.");
+
+        }
     }
 
 
